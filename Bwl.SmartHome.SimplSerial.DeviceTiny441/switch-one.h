@@ -21,8 +21,9 @@ char get_button()
 void set_relay(char state)
 {
 	setbit(DDRB,0,1);
+	setbit(DDRB,1,1);
 	setbit(PORTB,0,state);
-	DDRB|=(1<<3);PORTA&=(~(1<<3));
+	setbit(PORTB,1,state);
 }
 
 void sserial_send_start()
@@ -41,7 +42,10 @@ void sserial_process_request()
 	{
 		if ((sserial_request.data[0]==124)&&(sserial_request.data[1]==45)&&(sserial_request.data[2]==67)&&(sserial_request.data[3]==251))
 		{
-			if (sserial_request.data[4]==1) {switch_internal_state=sserial_response.data[5];}		
+			if (sserial_request.data[4]==1) 
+			{
+				switch_internal_state=sserial_request.data[5];
+			}		
 			sserial_response.datalength=6;
 			sserial_response.data[0]=12;
 			sserial_response.data[1]=79;

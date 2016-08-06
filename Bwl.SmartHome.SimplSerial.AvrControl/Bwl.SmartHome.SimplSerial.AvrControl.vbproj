@@ -47,19 +47,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bwl.Framework">
-      <HintPath>..\..\refs\bwl-smarthome-common\Bwl.Framework.dll</HintPath>
+      <HintPath>..\refs\bwl-smarthome-common\Bwl.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Bwl.Hardware.Serial">
-      <HintPath>..\..\refs\bwl-simplserial\Bwl.Hardware.Serial.dll</HintPath>
+      <HintPath>..\refs\bwl-simplserial\Bwl.Hardware.Serial.dll</HintPath>
     </Reference>
     <Reference Include="Bwl.Hardware.SimplSerial">
-      <HintPath>..\..\refs\bwl-simplserial\Bwl.Hardware.SimplSerial.dll</HintPath>
+      <HintPath>..\refs\bwl-simplserial\Bwl.Hardware.SimplSerial.dll</HintPath>
     </Reference>
     <Reference Include="bwl.Network.ClientServer">
-      <HintPath>..\..\refs\bwl-smarthome-common\bwl.Network.ClientServer.dll</HintPath>
+      <HintPath>..\refs\bwl-smarthome-common\bwl.Network.ClientServer.dll</HintPath>
     </Reference>
     <Reference Include="Bwl.SmartHome.Common">
-      <HintPath>..\..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
+      <HintPath>..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -86,7 +86,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SsSwitchOneDriver.vb" />
+    <Compile Include="DeviceManager\DeviceManager.vb" />
+    <Compile Include="Drivers\Interface\ISsDriver.vb" />
+    <Compile Include="Drivers\Interface\ISsDriverFactory.vb" />
+    <Compile Include="Drivers\SsBaseDriver.vb" />
+    <Compile Include="Drivers\SsSwitchOneDriver.vb" />
     <Compile Include="TestApp.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +137,7 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

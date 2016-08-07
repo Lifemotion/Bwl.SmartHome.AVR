@@ -26,7 +26,7 @@ Public MustInherit Class SsBaseDriver
     End Sub
 
     Public Sub UpdateServerObjects() Implements ISsDriver.UpdateServerObjects
-        If ((Now - _lastSuccessRequest).TotalMinutes < 1 Then
+        If (Now - _lastSuccessRequest).TotalMinutes < 1 Then
             _shc.SmartHome.Objects.SetObject(_serverObject, SmartObjectSetMask.configOnlyReplaceEmpty Or SmartObjectSetMask.statesOnlyReplaceEmpty)
             Dim changedObject = _shc.SmartHome.Objects.GetObject(_serverObject.Guid)
             If changedObject IsNot Nothing Then _serverObject = changedObject

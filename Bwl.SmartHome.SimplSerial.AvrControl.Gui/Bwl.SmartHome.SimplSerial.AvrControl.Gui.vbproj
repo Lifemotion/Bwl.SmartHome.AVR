@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8D96BF4-BA01-4272-B7C9-688E1753E277}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <StartupObject>
-    </StartupObject>
-    <RootNamespace>Bwl.SmartHome.SimplSerial.AvrControl</RootNamespace>
-    <AssemblyName>Bwl.SmartHome.SimplSerial.AvrControl</AssemblyName>
+    <ProjectGuid>{5C8EA1B9-110D-42CD-A3A0-309E23241747}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Bwl.SmartHome.SimplSerial.AvrControl.Gui.My.MyApplication</StartupObject>
+    <RootNamespace>Bwl.SmartHome.SimplSerial.AvrControl.Gui</RootNamespace>
+    <AssemblyName>Bwl.SmartHome.SimplSerial.AvrControl.Gui</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
+    <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,8 +19,8 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.xml</DocumentationFile>
+    <OutputPath>..\debug\Bwl SmartHome Avr Control\bin\</OutputPath>
+    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.Gui.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -30,8 +29,8 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.xml</DocumentationFile>
+    <OutputPath>..\release\Bwl SmartHome Avr Control\bin\</OutputPath>
+    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.Gui.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -47,8 +46,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Connexion rВseau white.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bwl.Framework">
@@ -64,6 +62,8 @@
       <HintPath>..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -72,15 +72,17 @@
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceManager\DeviceManager.vb" />
-    <Compile Include="Drivers\Interface\ISsDriver.vb" />
-    <Compile Include="Drivers\Interface\ISsDriverFactory.vb" />
-    <Compile Include="Drivers\SsBaseDriver.vb" />
-    <Compile Include="Drivers\SsSwitchOneDriver.vb" />
+    <Compile Include="AvrControlApp.Designer.vb">
+      <DependentUpon>AvrControlApp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AvrControlApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -98,6 +100,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AvrControlApp.resx">
+      <DependentUpon>AvrControlApp.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -115,6 +120,16 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bwl.SmartHome.SimplSerial.AvrControl\Bwl.SmartHome.SimplSerial.AvrControl.vbproj">
+      <Project>{f8d96bf4-ba01-4272-b7c9-688e1753e277}</Project>
+      <Name>Bwl.SmartHome.SimplSerial.AvrControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Connexion rВseau white.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

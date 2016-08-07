@@ -1,8 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class TestApp
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class AvrControlApp
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -19,9 +19,10 @@ Partial Class TestApp
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AvrControlApp))
         Me.lbDrivers = New System.Windows.Forms.ListBox()
         Me.lbDevices = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -30,13 +31,14 @@ Partial Class TestApp
         Me.tPoll = New System.Windows.Forms.Timer(Me.components)
         Me.tUpdateObjects = New System.Windows.Forms.Timer(Me.components)
         Me.tFind = New System.Windows.Forms.Timer(Me.components)
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.SuspendLayout()
         '
         'logWriter
         '
         Me.logWriter.ExtendedView = False
         Me.logWriter.Location = New System.Drawing.Point(2, 207)
-        Me.logWriter.Size = New System.Drawing.Size(781, 269)
+        Me.logWriter.Size = New System.Drawing.Size(781, 179)
         '
         'lbDrivers
         '
@@ -96,16 +98,23 @@ Partial Class TestApp
         Me.tFind.Enabled = True
         Me.tFind.Interval = 60000
         '
-        'TestApp
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
+        Me.NotifyIcon1.Text = "SmartHome Computer Control"
+        Me.NotifyIcon1.Visible = True
+        '
+        'AvrControlApp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 477)
+        Me.ClientSize = New System.Drawing.Size(784, 387)
         Me.Controls.Add(Me.bFindDevices)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.lbDevices)
         Me.Controls.Add(Me.lbDrivers)
-        Me.Name = "TestApp"
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Name = "AvrControlApp"
         Me.Text = "Bwl SmartHome SimplSerial AVR"
         Me.Controls.SetChildIndex(Me.logWriter, 0)
         Me.Controls.SetChildIndex(Me.lbDrivers, 0)
@@ -125,4 +134,5 @@ Partial Class TestApp
     Friend WithEvents tPoll As Timer
     Friend WithEvents tUpdateObjects As Timer
     Friend WithEvents tFind As Timer
+    Friend WithEvents NotifyIcon1 As NotifyIcon
 End Class

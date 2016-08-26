@@ -1,8 +1,8 @@
 ﻿Imports Bwl.Hardware.SimplSerial
 
 Public Class DeviceManager
-    Public ReadOnly Property DriverFactories As New List(Of ISsDriverFactory)
     Public ReadOnly Property Drivers As New List(Of ISsDriver)
+    Public ReadOnly Property Devices As New List(Of ISsDevice)
 
     Protected _bus As SimplSerialBus
     Protected _logger As Framework.Logger
@@ -19,7 +19,7 @@ Public Class DeviceManager
         Dim guids = _bus.FindDevices()
         For Each guid In guids
             Dim found As Boolean = False
-            For Each driver In Drivers
+            For Each driver In Devices
                 If driver.Guid = guid.ToString Then
                     found = True
                     Exit For
@@ -31,12 +31,12 @@ Public Class DeviceManager
                 Dim devinfo = _bus.RequestDeviceInfo(address)
                 If devinfo.DeviceName > "" Then
                     Dim supported As Boolean = False
-                    For Each df In DriverFactories
+                    For Each df In Drivers
                         If df.IsDeviceSupported(devinfo.DeviceName) Then
                             Dim newdew = df.CreateDevice(guid.ToString)
                             _logger.AddMessage("Found new device " + guid.ToString + ", created with driver " + df.GetType.Name)
                             supported = True
-                            Me.Drivers.Add(newdew)
+                            Me.Devices.Add(newdew)
                         End If
                     Next
                     If Not supported Then
@@ -48,7 +48,7 @@ Public Class DeviceManager
     End Sub
 
     Public Sub PollDevices()
-        For Each driver In Drivers
+        For Each driver In Devices
             Try
                 driver.PollSimplSerial()
             Catch ex As Exception
@@ -58,7 +58,7 @@ Public Class DeviceManager
     End Sub
 
     Public Sub UpdateObjects()
-        For Each driver In Drivers
+        For Each driver In Devices
             Try
                 driver.UpdateServerObjects()
             Catch ex As Exception

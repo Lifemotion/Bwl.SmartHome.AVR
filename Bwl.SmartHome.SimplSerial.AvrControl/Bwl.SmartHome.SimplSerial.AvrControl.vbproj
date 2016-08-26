@@ -77,10 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceManager\DeviceManager.vb" />
+    <Compile Include="Drivers\Interface\ISsDevice.vb" />
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
-    <Compile Include="Drivers\Interface\ISsDriverFactory.vb" />
-    <Compile Include="Drivers\SsBaseDriver.vb" />
-    <Compile Include="Drivers\SsSwitchOneDriver.vb" />
+    <Compile Include="Drivers\SsBaseDevice.vb" />
+    <Compile Include="Drivers\SsSwitchOneDevice.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

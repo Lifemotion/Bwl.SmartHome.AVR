@@ -1,7 +1,7 @@
 ﻿Imports Bwl.Hardware.SimplSerial
 
-Public Class SsSwitchOneDriver
-    Inherits SsBaseDriver
+Public Class SsSwitchOneDevice
+    Inherits SsBaseDevice
     Private _switch1action As New SmartState
 
     Public Sub New(bus As SimplSerialBus, logger As Framework.Logger, guid As String, shc As SmartHomeClient)
@@ -51,8 +51,8 @@ Public Class SsSwitchOneDriver
     End Sub
 End Class
 
-Public Class SsSwitchOneDriverFactory
-    Implements ISsDriverFactory
+Public Class SsSwitchOneDriver
+    Implements ISsDriver
     Protected _bus As SimplSerialBus
     Protected _logger As Framework.Logger
     Protected _shc As SmartHomeClient
@@ -63,12 +63,12 @@ Public Class SsSwitchOneDriverFactory
         _shc = shc
     End Sub
 
-    Public Function IsDeviceSupported(devicename As String) As Boolean Implements ISsDriverFactory.IsDeviceSupported
+    Public Function IsDeviceSupported(devicename As String) As Boolean Implements ISsDriver.IsDeviceSupported
         Return devicename.Contains("SS.SwitchOne")
     End Function
 
-    Public Function CreateDevice(guid As String) As ISsDriver Implements ISsDriverFactory.CreateDevice
-        Dim device As New SsSwitchOneDriver(_bus, _logger, guid, _shc)
+    Public Function CreateDevice(guid As String) As ISsDevice Implements ISsDriver.CreateDevice
+        Dim device As New SsSwitchOneDevice(_bus, _logger, guid, _shc)
         Return device
     End Function
 End Class

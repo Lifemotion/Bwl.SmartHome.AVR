@@ -1,7 +1,7 @@
 ﻿Imports Bwl.Hardware.SimplSerial
 
-Public MustInherit Class SsBaseDriver
-    Implements ISsDriver
+Public MustInherit Class SsBaseDevice
+    Implements ISsDevice
     Protected _bus As SimplSerialBus
     Protected _logger As Framework.Logger
     Protected _shc As SmartHomeClient
@@ -9,9 +9,9 @@ Public MustInherit Class SsBaseDriver
     Protected _rnd As New Random
     Protected _lastSuccessRequest As DateTime
 
-    Public MustOverride Sub PollSimplSerial() Implements ISsDriver.PollSimplSerial
+    Public MustOverride Sub PollSimplSerial() Implements ISsDevice.PollSimplSerial
 
-    Public ReadOnly Property Guid As String Implements ISsDriver.Guid
+    Public ReadOnly Property Guid As String Implements ISsDevice.Guid
         Get
             Return _serverObject.Guid
         End Get
@@ -25,7 +25,7 @@ Public MustInherit Class SsBaseDriver
         _serverObject = New SmartObject(guid)
     End Sub
 
-    Public Sub UpdateServerObjects() Implements ISsDriver.UpdateServerObjects
+    Public Sub UpdateServerObjects() Implements ISsDevice.UpdateServerObjects
         If (Now - _lastSuccessRequest).TotalMinutes < 1 Then
             _shc.SmartHome.Objects.SetObject(_serverObject, SmartObjectSetMask.configOnlyReplaceEmpty Or SmartObjectSetMask.statesOnlyReplaceEmpty)
             Dim changedObject = _shc.SmartHome.Objects.GetObject(_serverObject.Guid)

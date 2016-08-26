@@ -11,9 +11,9 @@ Public Class AvrControlApp
     Private _autostartSetting As New BooleanSetting(_storage, "Autostart", False)
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        _deviceManager.DriverFactories.Add(New SsSwitchOneDriverFactory(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
 
-        For Each df In _deviceManager.DriverFactories
+        For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next
     End Sub
@@ -50,7 +50,7 @@ Public Class AvrControlApp
 
     Private Sub tStates_Tick(sender As Object, e As EventArgs) Handles tStates.Tick
         lbDevices.Items.Clear()
-        For Each drives In _deviceManager.Drivers
+        For Each drives In _deviceManager.Devices
             lbDevices.Items.Add(drives.Guid + " " + drives.GetType.Name)
         Next
     End Sub

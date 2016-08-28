@@ -31,12 +31,10 @@ Partial Class AvrControlApp
         Me.tPoll = New System.Windows.Forms.Timer(Me.components)
         Me.tUpdateObjects = New System.Windows.Forms.Timer(Me.components)
         Me.tFind = New System.Windows.Forms.Timer(Me.components)
-        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.SuspendLayout()
         '
         'logWriter
         '
-        Me.logWriter.ExtendedView = False
         Me.logWriter.Location = New System.Drawing.Point(2, 207)
         Me.logWriter.Size = New System.Drawing.Size(781, 179)
         '
@@ -98,12 +96,6 @@ Partial Class AvrControlApp
         Me.tFind.Enabled = True
         Me.tFind.Interval = 60000
         '
-        'NotifyIcon1
-        '
-        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
-        Me.NotifyIcon1.Text = "SmartHome Computer Control"
-        Me.NotifyIcon1.Visible = True
-        '
         'AvrControlApp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -134,5 +126,4 @@ Partial Class AvrControlApp
     Friend WithEvents tPoll As Timer
     Friend WithEvents tUpdateObjects As Timer
     Friend WithEvents tFind As Timer
-    Friend WithEvents NotifyIcon1 As NotifyIcon
 End Class

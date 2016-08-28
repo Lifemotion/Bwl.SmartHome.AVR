@@ -5,7 +5,10 @@ Public MustInherit Class SsBaseDevice
     Protected _bus As SimplSerialBus
     Protected _logger As Framework.Logger
     Protected _shc As SmartHomeClient
-    Protected _serverObject As SmartObject
+    Protected _guid As String
+
+    Protected _objectScheme As New SmartObjectScheme
+
     Protected _rnd As New Random
     Protected _lastSuccessRequest As DateTime
 
@@ -13,7 +16,7 @@ Public MustInherit Class SsBaseDevice
 
     Public ReadOnly Property Guid As String Implements ISsDevice.Guid
         Get
-            Return _serverObject.Guid
+            Return _guid
         End Get
     End Property
 
@@ -21,16 +24,11 @@ Public MustInherit Class SsBaseDevice
         _bus = bus
         _logger = logger
         _shc = shc
-
-        _serverObject = New SmartObject(guid)
+        _guid = guid
     End Sub
 
     Public Sub UpdateServerObjects() Implements ISsDevice.UpdateServerObjects
-        If (Now - _lastSuccessRequest).TotalMinutes < 1 Then
-            _shc.SmartHome.Objects.SetObject(_serverObject, SmartObjectSetMask.configOnlyReplaceEmpty Or SmartObjectSetMask.statesOnlyReplaceEmpty)
-            Dim changedObject = _shc.SmartHome.Objects.GetObject(_serverObject.Guid)
-            If changedObject IsNot Nothing Then _serverObject = changedObject
-        End If
+        _shc.SmartHome.Objects.SetScheme(_guid, _objectScheme)
     End Sub
 
     Protected Function BusRequestByGuid(command As Byte, data() As Byte) As SSResponse
@@ -39,7 +37,7 @@ Public MustInherit Class SsBaseDevice
 
     Protected Function BusRequestByGuid(request As SSRequest) As SSResponse
         Dim address = _rnd.Next(1, 30000)
-        _bus.RequestSetAddress(System.Guid.Parse(_serverObject.Guid), address)
+        _bus.RequestSetAddress(System.Guid.Parse(_guid), address)
         request.Address = address
         Dim response = _bus.Request(request)
         Return response

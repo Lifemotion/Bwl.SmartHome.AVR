@@ -3,12 +3,10 @@ Imports Bwl.Hardware.SimplSerial
 Imports Microsoft.Win32
 
 Public Class AvrControlApp
-    Inherits FormAppBase
-    Private _client As New SmartHomeClient(_storage, _logger)
+    Inherits SmartHomeClientBase
     Private _bus As New SimplSerialBus
     Private _portSetting As New StringSetting(_storage, "BusPort", "")
     Private _deviceManager As New DeviceManager(_bus, _logger, _client)
-    Private _autostartSetting As New BooleanSetting(_storage, "Autostart", False)
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
@@ -66,19 +64,4 @@ Public Class AvrControlApp
         End Try
     End Sub
 
-    Private Sub ComputerControlApp_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If e.CloseReason = CloseReason.UserClosing Then
-            e.Cancel = True
-            Hide()
-        End If
-        If _autostartSetting.Value Then
-            Dim rkey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software\Microsoft\Windows\CurrentVersion\Run")
-            rkey.SetValue("SmartHome AvrControl", Application.ExecutablePath)
-        End If
-    End Sub
-
-    Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
-        Me.Hide()
-        Me.Show()
-    End Sub
 End Class

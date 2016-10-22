@@ -2,15 +2,13 @@
 #define F_CPU 8000000UL
 #include <util/setbaud.h>
 #include <util/delay.h>
-
 	
 #include "libs/bwl_uart.h"
 #include "libs/bwl_simplserial.h"
-
-#include "multiswitch-one.h"
-
 #include "../guid"
 unsigned char dev_guid[16]=DEV_GUID;
+
+#include "multiswitch-one.h"
 
 void var_delay_ms(int ms)
 {

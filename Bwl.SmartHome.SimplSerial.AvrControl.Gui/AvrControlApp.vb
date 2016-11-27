@@ -10,10 +10,18 @@ Public Class AvrControlApp
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsMultiSwitchDriver(_bus, _logger, _client))
 
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next
+        Text += " " + Application.ProductVersion
+        niTray.Text = "BWL SH: AvrControl"
+        niTray.Icon = Icon
+#If Not DEBUG Then
+        Dim invisible As New Threading.Thread(Sub() Me.Invoke(Sub() Hide()))
+        invisible.Start()
+#End If
     End Sub
 
     Private Sub tPoll_Tick(sender As Object, e As EventArgs) Handles tPoll.Tick

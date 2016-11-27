@@ -33,6 +33,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -80,7 +81,7 @@
     <Compile Include="Drivers\Interface\ISsDevice.vb" />
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
     <Compile Include="Drivers\SsBaseDevice.vb" />
-    <Compile Include="Drivers\SsSwitchOneDevice.vb" />
+    <Compile Include="Drivers\SsMultiSwitchDevice.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -96,6 +97,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Drivers\SsSwitchOneDevice.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

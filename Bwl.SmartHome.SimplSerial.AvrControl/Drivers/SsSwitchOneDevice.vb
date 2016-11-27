@@ -1,9 +1,10 @@
 ﻿Imports Bwl.Hardware.SimplSerial
-Imports Bwl.SmartHome
 
 Public Class SsSwitchOneDevice
     Inherits SsBaseDevice
     Private _switch1action As New SmartStateScheme
+    Private _lastSwitchState As Boolean
+    Private _lastSwitchStateUnknown As Boolean = True
 
     Public Sub New(bus As SimplSerialBus, logger As Framework.Logger, guid As String, shc As SmartHomeClient)
         MyBase.New(bus, logger, guid, shc)
@@ -24,23 +25,41 @@ Public Class SsSwitchOneDevice
     Private Sub StateChangedHandler(objGuid As String, stateId As String, lastValue As String, currentValue As String, changedBy As ChangedBy)
         If objGuid = Guid And (changedBy = ChangedBy.script Or changedBy = ChangedBy.user) Then
             If stateId = _switch1action.ID Then
-                Dim response = BusRequestByGuid(1, {124, 45, 67, 251, 0, 0})
-                If response.Data.Length = 6 Then
-                    If response.Data(0) = 12 And response.Data(1) = 79 And response.Data(2) = 36 And response.Data(3) = 129 Then
-                        _lastSuccessRequest = Now
-                        Dim externalSwitch1 = response.Data(4)
-                        Dim internalSwitch1 = response.Data(5)
-                        Dim resulting = externalSwitch1 <> internalSwitch1
-                        If (resulting = True And currentValue = "off") Or (resulting = False And currentValue = "on") Then
-                            If internalSwitch1 = 0 Then internalSwitch1 = 1 Else internalSwitch1 = 0
-                            Dim response1 = BusRequestByGuid(1, {124, 45, 67, 251, 1, internalSwitch1})
-                            If response1.Data.Length = 6 Then
-                                'ok
-                            End If
-                        End If
+                For i = 1 To 5
+                    Try
+                        SetDeviceState(currentValue)
+                        Return
+                    Catch ex As Exception
+                        _logger.AddWarning("Failed to set device state: " + ex.Message)
+                    End Try
+                Next
+            End If
+        End If
+    End Sub
+
+    Private Sub SetDeviceState(state As String)
+        Dim response = BusRequestByGuid(1, {124, 45, 67, 251, 0, 0})
+        If response.Data.Length = 6 Then
+            If response.Data(0) = 12 And response.Data(1) = 79 And response.Data(2) = 36 And response.Data(3) = 129 Then
+                _lastSuccessRequest = Now
+                Dim externalSwitch1 = response.Data(4)
+                Dim internalSwitch1 = response.Data(5)
+                Dim resulting = externalSwitch1 <> internalSwitch1
+                If (_lastSwitchState = True And state = "off") Or (_lastSwitchState = False And state = "on") Then
+                    If internalSwitch1 = 0 Then internalSwitch1 = 1 Else internalSwitch1 = 0
+                    Dim response1 = BusRequestByGuid(1, {124, 45, 67, 251, 1, internalSwitch1})
+                    If response1.Data.Length = 6 Then
+                        'ok
+                        _lastSwitchState = True
+                    Else
+                        Throw New Exception("Bad response 2: " + response1.ToString)
                     End If
                 End If
+            Else
+                Throw New Exception("Bad magic: " + response.ToString)
             End If
+        Else
+            Throw New Exception("Bad response 1: " + response.ToString)
         End If
     End Sub
 
@@ -51,7 +70,20 @@ Public Class SsSwitchOneDevice
                 _lastSuccessRequest = Now
                 Dim externalSwitch1 = response.Data(4)
                 Dim internalSwitch1 = response.Data(5)
-
+                Dim resulting = externalSwitch1 <> internalSwitch1
+                If _lastSwitchStateUnknown Then
+                    _lastSwitchState = resulting
+                    _lastSwitchStateUnknown = False
+                Else
+                    If resulting <> _lastSwitchState Then
+                        Try
+                            _shc.SmartHome.Objects.SetValue(_guid, _switch1action.ID, If(resulting, "on", "off"), ChangedBy.device)
+                            _lastSwitchState = resulting
+                        Catch ex As Exception
+                            _logger.AddWarning("Failed to send to server change from device " + _guid)
+                        End Try
+                    End If
+                End If
             End If
         End If
     End Sub

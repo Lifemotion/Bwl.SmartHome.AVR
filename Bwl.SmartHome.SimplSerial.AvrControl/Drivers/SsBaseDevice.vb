@@ -2,7 +2,7 @@
 
 Public MustInherit Class SsBaseDevice
     Implements ISsDevice
-    Protected _bus As SimplSerialBus
+    Private _bus As SimplSerialBus
     Protected _logger As Framework.Logger
     Protected _shc As SmartHomeClient
     Protected _guid As String
@@ -36,11 +36,13 @@ Public MustInherit Class SsBaseDevice
     End Function
 
     Protected Function BusRequestByGuid(request As SSRequest) As SSResponse
-        Dim address = _rnd.Next(1, 30000)
-        _bus.RequestSetAddress(System.Guid.Parse(_guid), address)
-        request.Address = address
-        Dim response = _bus.Request(request)
-        Return response
+        SyncLock Me
+            Dim address = _rnd.Next(1, 30000)
+            _bus.RequestSetAddress(System.Guid.Parse(_guid), address)
+            request.Address = address
+            Dim response = _bus.Request(request)
+            Return response
+        End SyncLock
     End Function
 
 End Class

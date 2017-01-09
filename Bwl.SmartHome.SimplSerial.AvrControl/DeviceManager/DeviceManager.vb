@@ -17,6 +17,7 @@ Public Class DeviceManager
 
     Public Sub SearchDevices()
         Dim guids = _bus.FindDevices()
+        _logger.AddDebug("Found on bus: " + guids.Length.ToString)
         For Each guid In guids
             Dim found As Boolean = False
             For Each driver In Devices

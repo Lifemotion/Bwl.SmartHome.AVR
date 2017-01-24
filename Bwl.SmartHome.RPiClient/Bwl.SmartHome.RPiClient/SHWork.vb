@@ -40,6 +40,16 @@ Public Class SHWork
         End Try
     End Sub
 
+    Private Sub ResetButton(stateID As String)
+        Dim th = New Threading.Thread(Sub() Me.ResetButtonExecutor(stateID))
+        th.Start()
+    End Sub
+
+    Private Sub ResetButtonExecutor(stateID As String)
+        Threading.Thread.Sleep(500)
+        _client.SmartHome.Objects.SetValue(_client._guid, stateID, "0", ChangedBy.device)
+    End Sub
+
     Private Sub StateChangedHandler(objGuid As String, stateId As String, lastValue As String, currentValue As String, changedBy As ChangedBy)
         If objGuid = _client._guid And changedBy = ChangedBy.user Or changedBy = ChangedBy.script Then
             Dim data() As Byte = {12, 47, 55, 100, 1, 0, 12, 1}
@@ -49,6 +59,8 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV On/Off")
+                    ResetButton(stateId)
+
                 End If
 
             End If
@@ -59,6 +71,7 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV Vol-")
+                    ResetButton(stateId)
                 End If
             End If
 
@@ -68,6 +81,7 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV Vol+")
+                    ResetButton(stateId)
                 End If
             End If
 
@@ -77,6 +91,7 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV next channel")
+                    ResetButton(stateId)
                 End If
             End If
 
@@ -86,6 +101,7 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV Previous channel")
+                    ResetButton(stateId)
                 End If
             End If
 
@@ -95,9 +111,9 @@ Public Class SHWork
                 Dim req = _sst.Request(0, 1, data)
                 If (req.Data.Length > 0) Then
                     Console.WriteLine("TV mute")
+                    ResetButton(stateId)
                 End If
             End If
-            _client.SmartHome.Objects.SetValue(_client._guid, stateId, "", ChangedBy.user)
         End If
     End Sub
 

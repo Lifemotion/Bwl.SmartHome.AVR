@@ -6,22 +6,6 @@ Bwl.Hardware.SimplSerial
 </name>
 </assembly>
 <members>
-<member name="T:Bwl.Hardware.SimplSerial.My.Resources.Resources">
-<summary>
-  Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
-</summary>
-</member>
-<member name="P:Bwl.Hardware.SimplSerial.My.Resources.Resources.ResourceManager">
-<summary>
-  Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
-</summary>
-</member>
-<member name="P:Bwl.Hardware.SimplSerial.My.Resources.Resources.Culture">
-<summary>
-  Перезаписывает свойство CurrentUICulture текущего потока для всех
-  обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
-</summary>
-</member>
 <member name="T:Bwl.Hardware.SimplSerial.Logger">
  <summary>
  Класс, представляющий средство для иерархичного ведения журнала событий в программе.
@@ -76,6 +60,22 @@ Bwl.Hardware.SimplSerial
  <param name="address">Адрес устройства.</param>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="T:Bwl.Hardware.SimplSerial.My.Resources.Resources">
+<summary>
+  Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+</summary>
+</member>
+<member name="P:Bwl.Hardware.SimplSerial.My.Resources.Resources.ResourceManager">
+<summary>
+  Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+</summary>
+</member>
+<member name="P:Bwl.Hardware.SimplSerial.My.Resources.Resources.Culture">
+<summary>
+  Перезаписывает свойство CurrentUICulture текущего потока для всех
+  обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+</summary>
 </member>
 </members>
 </doc>

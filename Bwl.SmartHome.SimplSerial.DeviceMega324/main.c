@@ -1,14 +1,10 @@
-#define BAUD 9600
-#define F_CPU 8000000UL
-#include <util/setbaud.h>
-#include <util/delay.h>
-	
 #include "libs/bwl_uart.h"
 #include "libs/bwl_simplserial.h"
 #include "../guid"
 unsigned char dev_guid[16]=DEV_GUID;
 
-#include "multiswitch-one.h"
+//#include "multiswitch-one.h"
+#include "rgb-one.h"
 
 void var_delay_ms(int ms)
 {
@@ -24,6 +20,7 @@ int main(void)
 		sserial_devguid[i]=dev_guid[i];
 	}
 	uart_init_withdivider(0,UBRR_VALUE);
+	r1=1;
 	while(1)
 	{
 		sserial_poll_uart(0);

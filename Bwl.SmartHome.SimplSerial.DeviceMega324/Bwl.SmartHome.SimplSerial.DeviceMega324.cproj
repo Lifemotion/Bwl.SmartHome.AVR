@@ -168,6 +168,9 @@
     <Compile Include="multiswitch-one.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rgb-one.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs" />

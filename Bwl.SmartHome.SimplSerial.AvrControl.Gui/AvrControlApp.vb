@@ -11,6 +11,7 @@ Public Class AvrControlApp
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsMultiSwitchDriver(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsRgbOneDriver(_bus, _logger, _client))
 
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)

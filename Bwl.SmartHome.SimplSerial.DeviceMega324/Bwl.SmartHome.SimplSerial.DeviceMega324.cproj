@@ -147,6 +147,9 @@
     <PreBuildEvent>..\guidgen #define DEV_GUID</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="actuators-one.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="libs\bwl_simplserial.c">
       <SubType>compile</SubType>
     </Compile>

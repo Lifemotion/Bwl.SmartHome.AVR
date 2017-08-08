@@ -82,7 +82,11 @@
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
     <Compile Include="Drivers\SsBaseDevice.vb" />
     <Compile Include="Drivers\SsMultiSwitchDevice.vb" />
+<<<<<<< HEAD
     <Compile Include="Drivers\SsValveDevice.vb" />
+=======
+    <Compile Include="Drivers\SsRgbOne.vb" />
+>>>>>>> 3a95f5dfc6b2fbe52a9f645581f985829521189d
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

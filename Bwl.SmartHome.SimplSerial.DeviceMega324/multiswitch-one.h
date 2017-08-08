@@ -1,8 +1,17 @@
+//FW for MultiSwitch One 1.0 (pcb: MultiSwitch v.1)
+
+#define BAUD 9600
+#define F_CPU 8000000UL
+
 #include <avr/io.h>
+#include <util/setbaud.h>
+#include <util/delay.h>
 
 #define DEVNAME "BwlSH.SS.MultiSwitch-1.0"
 #define getbit(port, bit)		((port) &   (1 << (bit)))
 #define setbit(port,bit,val)	{if ((val)) {(port)|= (1 << (bit));} else {(port) &= ~(1 << (bit));}}
+#warning "Build for MultiSwitch-1.0"
+
 
 byte get_buttons()
 {

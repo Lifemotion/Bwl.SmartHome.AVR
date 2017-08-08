@@ -11,7 +11,7 @@ Public Class AvrControlApp
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsMultiSwitchDriver(_bus, _logger, _client))
-
+        _deviceManager.Drivers.Add(New SsValveDriver(_bus, _logger, _client))
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next
@@ -33,8 +33,6 @@ Public Class AvrControlApp
                 _logger.AddMessage("Bus Connected on port " + _portSetting.Value)
                 _deviceManager.SearchDevices()
                 _deviceManager.SearchDevices()
-                _deviceManager.SearchDevices()
-                _deviceManager.SearchDevices()
             Catch ex As Exception
             End Try
         End If
@@ -46,8 +44,6 @@ Public Class AvrControlApp
 
     Private Sub bFindDevices_Click(sender As Object, e As EventArgs) Handles bFindDevices.Click
         Try
-            _deviceManager.SearchDevices()
-            _deviceManager.SearchDevices()
             _deviceManager.SearchDevices()
             _deviceManager.SearchDevices()
         Catch ex As Exception

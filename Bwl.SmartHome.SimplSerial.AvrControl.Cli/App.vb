@@ -29,6 +29,7 @@ Module App
 
         _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsMultiSwitchDriver(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsValveDriver(_bus, _logger, _client))
         Console.WriteLine("Bwl.SmartHome.SimplSerial.AvrControl.Cli")
         Console.WriteLine()
         For Each df In _deviceManager.Drivers

@@ -28,6 +28,7 @@ Public Class SsValveDevice
                 For i = 1 To 5
                     Try
                         SetDeviceState(currentValue)
+
                         Return
                     Catch ex As Exception
                         _logger.AddWarning("Failed to set device state: " + ex.Message)

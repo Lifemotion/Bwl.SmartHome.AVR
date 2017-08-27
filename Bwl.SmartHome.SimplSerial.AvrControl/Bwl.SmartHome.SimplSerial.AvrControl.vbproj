@@ -52,7 +52,8 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bwl.Framework">
+    <Reference Include="Bwl.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\refs\bwl-smarthome-common\Bwl.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Bwl.Hardware.Serial">
@@ -61,7 +62,12 @@
     <Reference Include="Bwl.Hardware.SimplSerial">
       <HintPath>..\refs\bwl-simplserial\Bwl.Hardware.SimplSerial.dll</HintPath>
     </Reference>
-    <Reference Include="Bwl.SmartHome.Common">
+    <Reference Include="bwl.Network.ClientServer, Version=1.0.15174.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refs\bwl-smarthome-common\bwl.Network.ClientServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Bwl.SmartHome.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -82,6 +88,7 @@
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
     <Compile Include="Drivers\SsBaseDevice.vb" />
     <Compile Include="Drivers\SsMultiSwitchDevice.vb" />
+    <Compile Include="Drivers\SsRemoteControlDevice.vb" />
     <Compile Include="Drivers\SsValveDevice.vb" />
     <Compile Include="Drivers\SsRgbOne.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

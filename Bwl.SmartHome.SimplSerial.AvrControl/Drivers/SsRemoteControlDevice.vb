@@ -8,7 +8,10 @@ Public Class SsRemoteControlDevice
     Inherits SsBaseDevice
     Private _temperatureAction As New SmartStateScheme
     Private _humidityAction As New SmartStateScheme
+    Private _replayAction As New SmartStateScheme
+    Private _saveAction As New SmartStateScheme
     Private _cmdList As List(Of Byte()) = New List(Of Byte())
+    Private _lastCapturedCmd As List(Of Byte) = New List(Of Byte)
 
     Public Sub New(bus As SimplSerialBus, logger As Framework.Logger, guid As String, shc As SmartHomeClient)
         MyBase.New(bus, logger, guid, shc)
@@ -18,6 +21,15 @@ Public Class SsRemoteControlDevice
         _humidityAction.ID = "humidity"
         _humidityAction.Type = SmartStateType.stateString
         _humidityAction.DefaultCaption = "Влажность"
+
+        _replayAction.ID = "replay_cmd"
+        _replayAction.Type = SmartStateType.actionButton
+        _replayAction.DefaultCaption = "Воспроизвести захват"
+
+        _saveAction.ID = "save_cmd"
+        _saveAction.Type = SmartStateType.actionButton
+        _saveAction.DefaultCaption = "Сохранить захват"
+
         _objectScheme.ClassID = "SsRemoteControlDriver"
         _objectScheme.DefaultCaption = "ИК модем " + guid
         _objectScheme.DefaultCategory = SmartObjectCategory.generic
@@ -25,20 +37,33 @@ Public Class SsRemoteControlDevice
         _objectScheme.DefaultShortName = ""
         _objectScheme.States.Add(_temperatureAction)
         _objectScheme.States.Add(_humidityAction)
+        _objectScheme.States.Add(_replayAction)
+        _objectScheme.States.Add(_saveAction)
         LoadCommands()
         AddHandler _shc.SmartHome.Objects.StateChanged, AddressOf StateChangedHandler
     End Sub
 
     Private Sub StateChangedHandler(objGuid As String, stateId As String, lastValue As String, currentValue As String, changedBy As ChangedBy)
         If objGuid = Guid And (changedBy = ChangedBy.user) Then
-            Try
-                Dim cmd = Integer.Parse(stateId.Split("_")(1)) - 1
-                If (cmd < _cmdList.Count) Then BusRequestByGuid(New SSRequest(0, 3, _cmdList(cmd)))
+            If (stateId.Contains("IrCmd_")) Then
+                Try
+                    Dim cmd = Integer.Parse(stateId.Split("_")(1)) - 1
+                    If (cmd < _cmdList.Count) Then BusRequestByGuid(New SSRequest(0, 3, _cmdList(cmd)))
+                    _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
+                Catch ex As Exception
+                    _logger.AddError(ex.Message)
+                    _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
+                End Try
+            End If
+            If stateId = _replayAction.ID Then
+                BusRequestByGuid(New SSRequest(0, 3, _lastCapturedCmd.ToArray))
                 _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
-            Catch ex As Exception
-                _logger.AddError(ex.Message)
-                _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
-            End Try
+            End If
+
+            If stateId = _saveAction.ID Then
+                SaveCommand(_lastCapturedCmd.ToArray)
+            End If
+
         End If
 
     End Sub
@@ -52,10 +77,13 @@ Public Class SsRemoteControlDevice
             _shc.SmartHome.Objects.SetValue(_guid, _humidityAction.ID, _humidityString, ChangedBy.device)
             If (response.Data(8) <> 0) Then
                 response = BusRequestByGuid(New SSRequest(0, 2, {}))
-                Dim data = response.Data
-                If (_cmdList.Count < 5) Then SaveCommand(data)
+                If response.Data.Length > 16 Then
+                    _lastCapturedCmd.Clear()
+                    _shc.SmartHome.Objects.SetValue(Guid, _saveAction.ID, "0", ChangedBy.device)
+                    _lastCapturedCmd.AddRange(response.Data)
+                End If
             End If
-        End If
+            End If
     End Sub
 
     Private Sub SaveCommand(data As Byte())
@@ -67,7 +95,8 @@ Public Class SsRemoteControlDevice
                 Next
                 sw.WriteLine(Str.Substring(0, Str.Length - 1))
             End Using
-            LoadCommands()
+            _cmdList.Add(data)
+            _objectScheme.States.Add(New SmartStateScheme("IrCmd_" + (_cmdList.Count).ToString, SmartStateType.actionButton, "Команда " + (_cmdList.Count).ToString))
         End If
     End Sub
 

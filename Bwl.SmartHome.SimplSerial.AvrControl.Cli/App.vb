@@ -22,6 +22,7 @@ Module App
                     Case "server"
                         _client.Transport.AddressSetting.Value = parts(1)
                     Case "busport"
+                        Console.WriteLine("Port: " + parts(1))
                         _portSetting.Value = parts(1)
                 End Select
             End If
@@ -66,6 +67,7 @@ Module App
             If _bus.IsConnected = False And _portSetting.Value > "" Then
                 Try
                     _bus.SerialDevice.DeviceAddress = _portSetting.Value
+
                     _bus.SerialDevice.DeviceSpeed = 9600
                     _bus.Connect()
                     Dim ret = _bus.RequestDeviceInfo(0)

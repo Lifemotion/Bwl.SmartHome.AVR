@@ -40,7 +40,7 @@ Public MustInherit Class SsBaseDevice
             Dim address = _rnd.Next(1, 30000)
             _bus.RequestSetAddress(System.Guid.Parse(_guid), address)
             request.Address = address
-            Dim response = _bus.Request(request)
+            Dim response = _bus.Request(request, 5)
             Return response
         End SyncLock
     End Function

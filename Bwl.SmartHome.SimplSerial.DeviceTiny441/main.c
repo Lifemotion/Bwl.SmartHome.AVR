@@ -25,6 +25,7 @@ int main(void)
 	{
 		sserial_devguid[i]=dev_guid[i];
 	}
+	REMAP = 0x01;
 	uart_init_withdivider(0,UBRR_VALUE);
 	while(1)
 	{

@@ -49,21 +49,17 @@ Public Class SsRemoteControlDevice
                 Try
                     Dim cmd = Integer.Parse(stateId.Split("_")(1)) - 1
                     If (cmd < _cmdList.Count) Then BusRequestByGuid(New SSRequest(0, 3, _cmdList(cmd)))
-                    _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
                 Catch ex As Exception
                     _logger.AddError(ex.Message)
-                    _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
                 End Try
             End If
             If stateId = _replayAction.ID Then
                 BusRequestByGuid(New SSRequest(0, 3, _lastCapturedCmd.ToArray))
-                _shc.SmartHome.Objects.SetValue(objGuid, stateId, "0", ChangedBy.device)
             End If
-
             If stateId = _saveAction.ID Then
                 SaveCommand(_lastCapturedCmd.ToArray)
             End If
-
+            _shc.SmartHome.Objects.SetValue(Guid, stateId, "0", ChangedBy.device)
         End If
 
     End Sub
@@ -79,7 +75,6 @@ Public Class SsRemoteControlDevice
                 response = BusRequestByGuid(New SSRequest(0, 2, {}))
                 If response.Data.Length > 16 Then
                     _lastCapturedCmd.Clear()
-                    _shc.SmartHome.Objects.SetValue(Guid, _saveAction.ID, "0", ChangedBy.device)
                     _lastCapturedCmd.AddRange(response.Data)
                 End If
             End If

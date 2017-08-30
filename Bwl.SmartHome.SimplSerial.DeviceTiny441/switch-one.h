@@ -12,18 +12,16 @@ char get_relay()
 
 char get_button()
 {
-	setbit(DDRA,0,0);
-	setbit(PUEA,0,1);
+	setbit(DDRA,2,0);
+	setbit(PUEA,2,1);
 
-	return (getbit(PINA,0)==0);
+	return (getbit(PINA,2)==0);
 }
 
 void set_relay(char state)
 {
-	setbit(DDRB,0,1);
-	setbit(DDRB,1,1);
-	setbit(PORTB,0,state);
-	setbit(PORTB,1,state);
+	setbit(DDRA,0,1);
+	setbit(PORTA,0,state);
 }
 
 void sserial_send_start()

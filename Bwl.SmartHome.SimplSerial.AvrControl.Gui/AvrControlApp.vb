@@ -14,6 +14,7 @@ Public Class AvrControlApp
         _deviceManager.Drivers.Add(New SsRemoteControlDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsValveDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsRgbOneDriver(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsEasyLeakDriver(_bus, _logger, _client))
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next

@@ -87,6 +87,7 @@
     <Compile Include="Drivers\Interface\ISsDevice.vb" />
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
     <Compile Include="Drivers\SsBaseDevice.vb" />
+    <Compile Include="Drivers\SsEasyLeak.vb" />
     <Compile Include="Drivers\SsMultiSwitchDevice.vb" />
     <Compile Include="Drivers\SsRemoteControlDevice.vb" />
     <Compile Include="Drivers\SsValveDevice.vb" />

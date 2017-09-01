@@ -33,17 +33,18 @@ Module App
         _deviceManager.Drivers.Add(New SsValveDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsRgbOneDriver(_bus, _logger, _client))
         _deviceManager.Drivers.Add(New SsRemoteControlDriver(_bus, _logger, _client))
+        _deviceManager.Drivers.Add(New SsEasyLeakDriver(_bus, _logger, _client))
         Console.WriteLine("Bwl.SmartHome.SimplSerial.AvrControl.Cli")
         Console.WriteLine()
         For Each df In _deviceManager.Drivers
             Console.WriteLine("Driver: " + df.GetType.Name)
         Next
-
         If _portSetting.Value = "" Then
             Dim devices = System.IO.Ports.SerialPort.GetPortNames
             For Each port In devices
                 If port.ToLower.Contains("com") Or port.ToLower.Contains("ttyusb") Then
                     _portSetting.Value = port
+                    Console.WriteLine(port)
                     Exit For
                 End If
             Next
@@ -73,7 +74,7 @@ Module App
                     Dim ret = _bus.RequestDeviceInfo(0)
                     Console.WriteLine(ret.DeviceName)
                     _logger.AddMessage("Bus Connected on port " + _portSetting.Value)
-                    For i = 1 To 5
+                    For i = 1 To 20
                         _deviceManager.SearchDevices()
                     Next
                     _logger.AddMessage("Search finished")
@@ -95,7 +96,7 @@ Module App
                 _deviceManager.SearchDevices()
             Catch ex As Exception
             End Try
-            Threading.Thread.Sleep(60000)
+            Threading.Thread.Sleep(300000)
         Loop
     End Sub
 

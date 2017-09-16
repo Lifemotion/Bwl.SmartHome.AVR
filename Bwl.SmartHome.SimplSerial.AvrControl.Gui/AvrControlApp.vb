@@ -49,6 +49,8 @@ Public Class AvrControlApp
         Try
             _deviceManager.SearchDevices()
             _deviceManager.SearchDevices()
+            _deviceManager.SearchDevices()
+            _deviceManager.SearchDevices()
         Catch ex As Exception
         End Try
     End Sub

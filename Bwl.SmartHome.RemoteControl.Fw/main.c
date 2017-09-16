@@ -63,8 +63,16 @@ void sserial_process_request(unsigned char portindex)
 		play_flag = 1;
 		play_array_lenght  = sserial_request.datalength;
 		play_array_counter = 0;
+		EIMSK &= ~(1<<INT0);
+		TCCR0B |= (1<<CS00);
 		sserial_send_response();
 	}
+}
+
+ISR(INT0_vect)
+{
+	EIMSK &= ~(1<<INT0);
+	TCCR0B |= (1<<CS00);
 }
 
 ISR(TIMER0_COMPA_vect)
@@ -81,6 +89,8 @@ ISR(TIMER0_COMPA_vect)
 		}else{
 			if(pointer!=0){
 				cmd_captured_flag = 1;
+				EIMSK  |=  (1<<INT0);
+				TCCR0B &= ~(1<<CS00);
 			}
 		}
 	}else{
@@ -94,6 +104,8 @@ ISR(TIMER0_COMPA_vect)
 		}else{
 			cli();
 			play_flag = 0;
+			TCCR0B &= ~(1<<CS00);
+			EIMSK  |=  (1<<INT0);
 			PORTD &= ~(1<<5);
 			sei();
 		}	

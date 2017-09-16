@@ -52,7 +52,10 @@ void board_init()
 	TCCR0A |= (1<<WGM00);
 	OCR0A   = 180;
 	TIMSK0 |= (1<<OCIE0A);
-	TCCR0B |= (1<<CS00);
+	
+	MCUCR = 1<<ISC01;
+	EIMSK = 1<<INT0;
+
 	wdt_enable(WDTO_8S);
 	sei();
 }

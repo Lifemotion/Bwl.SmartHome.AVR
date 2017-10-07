@@ -1,6 +1,7 @@
-﻿Imports Bwl.Framework
+﻿Imports Bwl
 Imports Bwl.Hardware.SimplSerial
 Imports Bwl.SmartHome
+Imports Bwl.SmartHome.SimplSerial.AvrControl
 
 Public Class SsEasyLeak
     Inherits SsBaseDevice

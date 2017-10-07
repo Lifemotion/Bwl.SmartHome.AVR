@@ -1,18 +1,45 @@
 ﻿Imports Bwl.Hardware.SimplSerial
+Imports System.Reflection
+Imports System.IO
 
 Public Class DeviceManager
     Public ReadOnly Property Drivers As New List(Of ISsDriver)
     Public ReadOnly Property Devices As New List(Of ISsDevice)
 
+    Private _pluginFolder As String = Environment.CurrentDirectory + Path.DirectorySeparatorChar + "plugins"
+    Private _plugins As List(Of String) = New List(Of String)
+
     Protected _bus As SimplSerialBus
     Protected _logger As Framework.Logger
     Protected _shc As SmartHomeClient
     Protected _rnd As New Random
+    Private _pluginLoaderThread As Threading.Thread
 
     Public Sub New(bus As SimplSerialBus, logger As Framework.Logger, shc As SmartHomeClient)
         _bus = bus
         _logger = logger
         _shc = shc
+    End Sub
+
+    Public Sub LoadPlugins()
+        If Directory.Exists(_pluginFolder) = False Then
+            Directory.CreateDirectory(_pluginFolder)
+        End If
+        Dim files = Directory.GetFiles(_pluginFolder)
+        For Each file In files
+            If _plugins.Contains(file) = False Then
+                Dim asm = Assembly.LoadFrom(file)
+                Dim types = asm.GetExportedTypes()
+                For Each type In types
+                    If type.Name.ToLower().Contains("driver") And Not _plugins.Contains(type.Name) Then
+                        Dim plugin As ISsDriver = Activator.CreateInstance(type, _bus, _logger, _shc)
+                        Drivers.Add(plugin)
+                        _plugins.Add(type.Name)
+                        Console.WriteLine("Loading plugin: " + type.Name)
+                    End If
+                Next
+            End If
+        Next
     End Sub
 
     Public Sub SearchDevices()

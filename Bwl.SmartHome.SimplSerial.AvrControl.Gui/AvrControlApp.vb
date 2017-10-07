@@ -9,12 +9,7 @@ Public Class AvrControlApp
     Private _deviceManager As New DeviceManager(_bus, _logger, _client)
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        _deviceManager.Drivers.Add(New SsSwitchOneDriver(_bus, _logger, _client))
-        _deviceManager.Drivers.Add(New SsMultiSwitchDriver(_bus, _logger, _client))
-        _deviceManager.Drivers.Add(New SsRemoteControlDriver(_bus, _logger, _client))
-        _deviceManager.Drivers.Add(New SsValveDriver(_bus, _logger, _client))
-        _deviceManager.Drivers.Add(New SsRgbOneDriver(_bus, _logger, _client))
-        _deviceManager.Drivers.Add(New SsEasyLeakDriver(_bus, _logger, _client))
+        _deviceManager.LoadPlugins()
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next

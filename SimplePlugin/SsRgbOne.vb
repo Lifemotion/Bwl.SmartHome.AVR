@@ -1,4 +1,7 @@
-﻿Imports Bwl.Hardware.SimplSerial
+﻿Imports Bwl
+Imports Bwl.Hardware.SimplSerial
+Imports Bwl.SmartHome
+Imports Bwl.SmartHome.SimplSerial.AvrControl
 
 Public Class SsRgbOne
     Inherits SsBaseDevice

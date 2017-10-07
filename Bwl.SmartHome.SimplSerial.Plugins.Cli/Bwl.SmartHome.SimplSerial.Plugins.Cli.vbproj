@@ -4,36 +4,31 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8D96BF4-BA01-4272-B7C9-688E1753E277}</ProjectGuid>
+    <ProjectGuid>{F163D0C6-BC5C-4FA6-8A95-E56770D5B61D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <StartupObject>
-    </StartupObject>
-    <RootNamespace>Bwl.SmartHome.SimplSerial.AvrControl</RootNamespace>
-    <AssemblyName>Bwl.SmartHome.SimplSerial.AvrControl</AssemblyName>
+    <RootNamespace>Bwl.SmartHome.SimplSerial.Plugins.Cli</RootNamespace>
+    <AssemblyName>Bwl.SmartHome.SimplSerial.Plugins.Cli</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.xml</DocumentationFile>
+    <DocumentationFile>Bwl.SmartHome.SimplSerial.Plugins.Cli.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Bwl.SmartHome.SimplSerial.AvrControl.xml</DocumentationFile>
+    <DocumentationFile>Bwl.SmartHome.SimplSerial.Plugins.Cli.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -47,46 +42,28 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bwl.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\bwl-smarthome-common\Bwl.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Bwl.Hardware.Serial">
-      <HintPath>..\refs\bwl-simplserial\Bwl.Hardware.Serial.dll</HintPath>
-    </Reference>
-    <Reference Include="Bwl.Hardware.SimplSerial">
-      <HintPath>..\refs\bwl-simplserial\Bwl.Hardware.SimplSerial.dll</HintPath>
-    </Reference>
-    <Reference Include="bwl.Network.ClientServer, Version=1.0.15174.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\bwl-smarthome-common\bwl.Network.ClientServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Bwl.SmartHome.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
-    <Import Include="System.Drawing" />
+    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceManager\DeviceManager.vb" />
-    <Compile Include="Drivers\Interface\ISsDevice.vb" />
-    <Compile Include="Drivers\Interface\ISsDriver.vb" />
-    <Compile Include="Drivers\SsBaseDevice.vb" />
+    <Compile Include="App.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -1,8 +1,8 @@
-﻿Imports System.Collections.Generic
-Imports System.IO
-Imports Bwl.Framework
+﻿Imports System.IO
+Imports Bwl
 Imports Bwl.Hardware.SimplSerial
 Imports Bwl.SmartHome
+Imports Bwl.SmartHome.SimplSerial.AvrControl
 
 Public Class SsRemoteControlDevice
     Inherits SsBaseDevice
@@ -78,7 +78,7 @@ Public Class SsRemoteControlDevice
                     _lastCapturedCmd.AddRange(response.Data)
                 End If
             End If
-            End If
+        End If
     End Sub
 
     Private Sub SaveCommand(data As Byte())

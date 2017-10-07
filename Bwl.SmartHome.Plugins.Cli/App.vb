@@ -28,9 +28,9 @@ Module App
                 End Select
             End If
         Next
-        _deviceManager.LoadPlugins()
         Console.WriteLine("Bwl.SmartHome.SimplSerial.AvrControl.Cli")
         Console.WriteLine()
+        _deviceManager.PluginScannerStart()
         If _portSetting.Value = "" Then
             Dim devices = System.IO.Ports.SerialPort.GetPortNames
             For Each port In devices

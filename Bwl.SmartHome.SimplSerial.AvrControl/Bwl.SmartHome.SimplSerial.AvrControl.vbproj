@@ -71,6 +71,7 @@
       <HintPath>..\refs\bwl-smarthome-common\Bwl.SmartHome.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -84,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceManager\DeviceManager.vb" />
+    <Compile Include="DeviceManager\PluginLoader.vb" />
     <Compile Include="Drivers\Interface\ISsDevice.vb" />
     <Compile Include="Drivers\Interface\ISsDriver.vb" />
     <Compile Include="Drivers\SsBaseDevice.vb" />

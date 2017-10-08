@@ -28,7 +28,7 @@ Module App
                 End Select
             End If
         Next
-        _deviceManager.LoadPlugins()
+        _deviceManager.RunPluginMonitor()
         Console.WriteLine("Bwl.SmartHome.SimplSerial.AvrControl.Cli")
         Console.WriteLine()
         If _portSetting.Value = "" Then

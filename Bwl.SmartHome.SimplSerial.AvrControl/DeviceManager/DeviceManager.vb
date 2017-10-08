@@ -21,25 +21,37 @@ Public Class DeviceManager
         _shc = shc
     End Sub
 
-    Public Sub LoadPlugins()
+    Public Sub RunPluginMonitor()
+        Dim th = New Threading.Thread(AddressOf LoadPlugins)
+        th.Start()
+        Dim remotePluginFolderMonitor = New PluginLoader("ПОМЕНЯТЬ", _pluginFolder)
+        remotePluginFolderMonitor.Start()
+    End Sub
+    Private Sub LoadPlugins()
         If Directory.Exists(_pluginFolder) = False Then
             Directory.CreateDirectory(_pluginFolder)
         End If
-        Dim files = Directory.GetFiles(_pluginFolder)
-        For Each file In files
-            If _plugins.Contains(file) = False Then
-                Dim asm = Assembly.LoadFrom(file)
-                Dim types = asm.GetExportedTypes()
-                For Each type In types
-                    If type.Name.ToLower().Contains("driver") And Not _plugins.Contains(type.Name) Then
-                        Dim plugin As ISsDriver = Activator.CreateInstance(type, _bus, _logger, _shc)
-                        Drivers.Add(plugin)
-                        _plugins.Add(type.Name)
-                        Console.WriteLine("Loading plugin: " + type.Name)
+        While True
+            Try
+                Dim files = Directory.GetFiles(_pluginFolder)
+                For Each file In files
+                    If _plugins.Contains(file) = False Then
+                        Dim asm = Assembly.LoadFrom(file)
+                        Dim types = asm.GetExportedTypes()
+                        For Each type In types
+                            If type.Name.ToLower().Contains("driver") And Not _plugins.Contains(type.Name) Then
+                                Dim plugin As ISsDriver = Activator.CreateInstance(type, _bus, _logger, _shc)
+                                Drivers.Add(plugin)
+                                _plugins.Add(type.Name)
+                                Console.WriteLine("Loading plugin: " + type.Name)
+                            End If
+                        Next
                     End If
                 Next
-            End If
-        Next
+            Catch ex As Exception
+            End Try
+            Threading.Thread.Sleep(900000)
+        End While
     End Sub
 
     Public Sub SearchDevices()

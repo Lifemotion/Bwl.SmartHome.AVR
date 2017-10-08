@@ -9,7 +9,7 @@ Public Class AvrControlApp
     Private _deviceManager As New DeviceManager(_bus, _logger, _client)
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        _deviceManager.LoadPlugins()
+        _deviceManager.RunPluginMonitor()
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next

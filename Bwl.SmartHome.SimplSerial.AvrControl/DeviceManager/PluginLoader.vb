@@ -15,13 +15,16 @@ Public Class PluginLoader
         th.Start()
     End Sub
     Private Sub PluginMonitor()
+        Console.WriteLine("Plugin loader work...")
         While True
-            Threading.Thread.Sleep(600000)
+            Threading.Thread.Sleep(600)
             Try
                 If IO.File.Exists("serverPlugins.xml") Then IO.File.Delete("serverPlugins.xml")
+                Console.WriteLine("Pull plugins...")
                 Using client = New WebClient()
                     client.DownloadFile("http://" + _url + "/plugins/plugins.xml", "serverPlugins.xml")
                 End Using
+
                 Dim xml = New XmlDocument()
                 xml.Load("serverPlugins.xml")
                 For Each n As XmlNode In xml.SelectNodes("/plugins/plugin")
@@ -42,6 +45,7 @@ Public Class PluginLoader
                 Next
             Catch ex As Exception
             End Try
+            Threading.Thread.Sleep(600000)
         End While
     End Sub
 End Class

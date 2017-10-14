@@ -6,10 +6,11 @@ Public Class AvrControlApp
     Inherits SmartHomeClientBase
     Private _bus As New SimplSerialBus
     Private _portSetting As New StringSetting(_storage, "BusPort", "")
+    Private _pluginSetting As New StringSetting(_storage, "PluginServer", "")
     Private _deviceManager As New DeviceManager(_bus, _logger, _client)
 
     Private Sub TestApp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        _deviceManager.RunPluginMonitor()
+        _deviceManager.RunPluginMonitor(_pluginSetting.Value)
         For Each df In _deviceManager.Drivers
             lbDrivers.Items.Add(df.GetType.Name)
         Next

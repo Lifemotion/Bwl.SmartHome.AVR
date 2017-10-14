@@ -14,6 +14,8 @@ Module App
 
     Sub Main()
         _logger.ConnectWriter(New ConsoleLogWriter)
+        Dim pluginServer As String = ""
+
         Dim cmd = Command().Split(" ")
         For Each cmdItem In cmd
             Console.WriteLine(cmdItem)
@@ -25,10 +27,13 @@ Module App
                     Case "busport"
                         Console.WriteLine("Port: " + parts(1))
                         _portSetting.Value = parts(1)
+                    Case "pluginserver"
+                        Console.WriteLine("Plugin server: " + parts(1))
+                        pluginServer = parts(1)
                 End Select
             End If
         Next
-        _deviceManager.RunPluginMonitor()
+        _deviceManager.RunPluginMonitor(pluginServer)
         Console.WriteLine("Bwl.SmartHome.SimplSerial.AvrControl.Cli")
         Console.WriteLine()
         If _portSetting.Value = "" Then

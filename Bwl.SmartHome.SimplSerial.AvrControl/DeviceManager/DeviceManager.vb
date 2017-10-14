@@ -21,10 +21,10 @@ Public Class DeviceManager
         _shc = shc
     End Sub
 
-    Public Sub RunPluginMonitor()
+    Public Sub RunPluginMonitor(server As String)
         Dim th = New Threading.Thread(AddressOf LoadPlugins)
         th.Start()
-        Dim remotePluginFolderMonitor = New PluginLoader("ПОМЕНЯТЬ", _pluginFolder)
+        Dim remotePluginFolderMonitor = New PluginLoader(server, _pluginFolder)
         remotePluginFolderMonitor.Start()
     End Sub
     Private Sub LoadPlugins()

@@ -97,7 +97,7 @@
     <Compile Include="SsMultiSwitchDevice.vb" />
     <Compile Include="SsRemoteControlDevice.vb" />
     <Compile Include="SsRgbOne.vb" />
-    <Compile Include="SsSwitchOneDevice.vb" />
+    <Compile Include="SsSolidSwitch.vb" />
     <Compile Include="SsValveDevice.vb" />
   </ItemGroup>
   <ItemGroup>

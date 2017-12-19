@@ -12,6 +12,7 @@ Module App
     Private _portSetting As New StringSetting(_storage, "BusPort", "")
     Private _deviceManager As New DeviceManager(_bus, _logger, _client)
 
+	  
     Sub Main()
         _logger.ConnectWriter(New ConsoleLogWriter)
         Dim pluginServer As String = ""

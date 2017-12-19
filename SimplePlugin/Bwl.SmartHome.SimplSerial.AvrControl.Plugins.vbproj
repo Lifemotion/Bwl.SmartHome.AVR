@@ -94,6 +94,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SsEasyLeak.vb" />
+    <Compile Include="SsJalousieDevice.vb" />
     <Compile Include="SsMultiSwitchDevice.vb" />
     <Compile Include="SsRemoteControlDevice.vb" />
     <Compile Include="SsRgbOne.vb" />

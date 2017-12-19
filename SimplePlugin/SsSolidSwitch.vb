@@ -38,27 +38,29 @@ Public Class SsSolidSwitch
     End Sub
 
     Private Sub SetDeviceState(state As String)
-        Dim response1 = BusRequestByGuid(2, {If(state = "on", 1, 0)})
-        If response1.ResponseState = ResponseState.ok Then
-            _lastSwitchState = True
+        Dim response = BusRequestByGuid(1, {If(state = "on", 1, 0)})
+        If response.ResponseState = ResponseState.ok Then
+            _lastSwitchState = If(state = "on", True, False)
+            Dim str = "Switch set"
+            For Each b In response.Data
+                str += " " + b.ToString
+            Next
+            _logger.AddMessage(str)
         Else
-            'Throw New Exception("Bad response 2: " + response1.ToString)
         End If
     End Sub
 
     Public Overrides Sub PollSimplSerial()
-        Dim response = BusRequestByGuid(1, {})
-        If response.Data.Length = 2 Then
-            _lastSuccessRequest = Now
-            Dim resulting As Boolean = response.Data(1) = 1
-            If _lastSwitchState <> resulting Then
-                Try
-                    _shc.SmartHome.Objects.SetValue(_guid, _switch1action.ID, If(resulting, "on", "off"), ChangedBy.device)
-                    _lastSwitchState = resulting
-                Catch ex As Exception
-                    _logger.AddWarning("Failed to send to server change from device " + _guid)
-                End Try
-            End If
+        Dim response = BusRequestByGuid(2, {})
+        _lastSuccessRequest = Now
+        Dim resulting As Boolean = response.Data(0) = 1
+        If _lastSwitchState <> resulting Then
+            Try
+                _shc.SmartHome.Objects.SetValue(_guid, _switch1action.ID, If(resulting, "on", "off"), ChangedBy.device)
+                _lastSwitchState = resulting
+            Catch ex As Exception
+                _logger.AddWarning("Failed to send to server change from device " + _guid)
+            End Try
         End If
     End Sub
 End Class
